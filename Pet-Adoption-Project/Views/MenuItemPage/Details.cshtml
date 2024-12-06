@@ -1,0 +1,33 @@
+﻿@model PetAdoption.Models.ViewModels.MenuItemDetails
+
+@{
+    ViewData["Title"] = "Menu Item Details";
+}
+
+<div class="container mt-4">
+
+    @if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                Menu Item Information
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Menu Item ID: @Model.MenuItem.MenuItemId</h5>
+                <p class="card-text"><strong>Name:</strong> @Model.MenuItem.Name</p>
+                <p class="card-text"><strong>Price:</strong> $@Model.MenuItem.Price.ToString("F2")</p>
+                <p class="card-text"><strong>Food Truck:</strong> @Model.MenuItem.FoodTruckId</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Edit", "MenuItemPage", new { id = Model.MenuItem.MenuItemId })" class="btn btn-warning">Edit Menu Item</a>
+                <a href="@Url.Action("List", "MenuItemPage")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Menu Item not found!
+        </div>
+    }
+</div>

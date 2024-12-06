@@ -1,0 +1,74 @@
+﻿@model PetAdoption.Models.ViewModels.PetDetails
+
+@{
+    ViewData["Title"] = "Pet Details";
+}
+
+<div class="container mt-4">
+
+    @if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                Pet Information
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Pet ID: @Model.Pet.PetId</h5>
+                <p class="card-text"><strong>Name:</strong> @Model.Pet.PetName</p>
+                <p class="card-text"><strong>Type:</strong> @Model.Pet.PetType</p>
+                <p class="card-text"><strong>Breed:</strong> @Model.Pet.PetBreed</p>
+                <p class="card-text"><strong>Age:</strong> @Model.Pet.PetAge</p>
+                <p class="card-text"><strong>Description:</strong> @Model.Pet.PetDescription</p>
+                <p class="card-text"><strong>Status:</strong> @Model.Pet.PetStatus</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Edit", "PetPage", new { id = Model.Pet.PetId })" class="btn btn-warning">Edit Pet</a>
+                <a href="@Url.Action("List", "PetPage")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+
+        @if (Model.AssociatedAccounts != null && Model.AssociatedAccounts.Any())
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    Associated Accounts
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var account in Model.AssociatedAccounts)
+                        {
+                            <li class="list-group-item">
+                                <strong>@account.AccountName</strong> (ID: @account.AccountId)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+
+        @if (Model.PetApplications != null && Model.PetApplications.Any())
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    Associated Applications
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var application in Model.PetApplications)
+                        {
+                            <li class="list-group-item">
+                                <strong>Application ID:</strong> @application.ApplicationID - <strong>Status:</strong> @application.ApplicationStatus
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Pet not found!
+        </div>
+    }
+</div>

@@ -1,0 +1,34 @@
+﻿@model PetAdoption.Models.ViewModels.AccountDetails
+
+@{
+    ViewData["Title"] = "Account Details";
+}
+
+<div class="container mt-4">
+
+    @if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                Account Information
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Account ID: @Model.Account.AccountId</h5>
+                <p class="card-text"><strong>Account Name:</strong> @Model.Account.AccountName</p>
+                <p class="card-text"><strong>Email:</strong> @Model.Account.AccountEmail</p>
+                <p class="card-text"><strong>Role:</strong> @Model.Account.AccountRole</p>
+
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Edit", "AccountPage", new { id = Model.Account.AccountId })" class="btn btn-warning">Edit Account</a>
+                <a href="@Url.Action("List", "AccountPage")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Account not found!
+        </div>
+    }
+</div>

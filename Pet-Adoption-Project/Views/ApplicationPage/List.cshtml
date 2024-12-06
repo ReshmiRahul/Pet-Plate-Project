@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PetAdoption.Models.ApplicationDto>
+
+@{
+    ViewData["Title"] = "Application List";
+}
+
+<h1>Application List</h1>
+
+<p>
+    <a asp-action="New" class="btn btn-primary">Create New Application</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AccountName)</th>
+            <th>@Html.DisplayNameFor(model => model.PetName)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PetName)</td>
+                   
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ApplicationID" class="btn btn-warning">Confirm</a>
+                        <a asp-action="Details" asp-route-id="@item.ApplicationID" class="btn btn-info">Details</a>
+                        <form asp-action="ConfirmDelete" asp-route-id="@item.ApplicationID" method="get" style="display:inline-block;">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+
+
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No applications found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

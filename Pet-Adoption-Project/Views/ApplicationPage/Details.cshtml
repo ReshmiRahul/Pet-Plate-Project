@@ -1,0 +1,38 @@
+﻿@model PetAdoption.Models.ViewModels.ApplicationDetails
+
+@{
+    ViewData["Title"] = "Application Details";
+}
+
+<div class="container mt-4">
+
+    @if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                Application Information
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Application ID: @Model.Application.ApplicationID</h5>
+                <p class="card-text"><strong>Account Name:</strong> @Model.Account.AccountName</p>
+                <p class="card-text"><strong>Pet Name:</strong> @Model.Pet.PetName</p>
+                <p class="card-text"><strong>Application Date:</strong> @Model.Application.ApplicationDate?.ToString("MM/dd/yyyy")</p>
+                <p class="card-text"><strong>Application Status:</strong> @Model.Application.ApplicationStatus</p>
+                <p class="card-text"><strong>Reason:</strong> @Model.Application.ApplicationReason</p>
+                <p class="card-text"><strong>Experience:</strong> @Model.Application.ApplicationExperience</p>
+                <p class="card-text"><strong>Comments:</strong> @Model.Application.ApplicationComments</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Edit", "ApplicationPage", new { id = Model.Application.ApplicationID })" class="btn btn-warning">Edit</a>
+                <a href="@Url.Action("ConfirmDelete", "ApplicationPage", new { id = Model.Application.ApplicationID })" class="btn btn-danger">Delete</a>
+                <a href="@Url.Action("List", "ApplicationPage")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Application not found!
+        </div>
+    }
+</div>

@@ -1,0 +1,33 @@
+﻿@model PetAdoption.Models.ViewModels.LocationDetails
+
+@{
+    ViewData["Title"] = "Location Details";
+}
+
+<div class="container mt-4">
+
+    @if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                Location Information
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Location ID: @Model.Location.LocationId</h5>
+                <p class="card-text"><strong>Address:</strong> @Model.Location.Address</p>
+                <p class="card-text"><strong>City:</strong> @Model.Location.City</p>
+                <p class="card-text"><strong>State:</strong> @Model.Location.State</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Edit", "LocationPage", new { id = Model.Location.LocationId })" class="btn btn-warning">Edit Location</a>
+                <a href="@Url.Action("List", "LocationPage")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Location not found!
+        </div>
+    }
+</div>

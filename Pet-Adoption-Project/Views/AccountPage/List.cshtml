@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PetAdoption.Models.AccountDto>
+
+@{
+    ViewData["Title"] = "Accounts List";
+}
+
+<h1>Accounts List</h1>
+
+<p>
+    <a asp-action="New" class="btn btn-primary">Create an Account</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().AccountName)</th>
+            <th>@Html.DisplayNameFor(model => model.First().AccountEmail)</th>
+            <th>@Html.DisplayNameFor(model => model.First().AccountRole)</th>
+            <th>@Html.DisplayNameFor(model => model.First().LocationAddress)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                <td>@Html.DisplayFor(modelItem => item.AccountEmail)</td>
+                <td>@Html.DisplayFor(modelItem => item.AccountRole)</td>
+                <td>@Html.DisplayFor(modelItem => item.LocationAddress)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.AccountId" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.AccountId" class="btn btn-warning">Edit</a>
+                    <form asp-action="ConfirmDelete" asp-route-id="@item.AccountId" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

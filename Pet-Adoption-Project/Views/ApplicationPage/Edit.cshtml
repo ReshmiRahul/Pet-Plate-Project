@@ -1,0 +1,74 @@
+﻿@model PetAdoption.Models.ApplicationDto
+
+@{
+    ViewData["Title"] = "Edit Application";
+}
+
+<h1>Edit Application</h1>
+
+<h4>Application</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Update" asp-route-id="@Model.ApplicationID">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ApplicationID" />
+
+            <div class="form-group">
+                <label asp-for="AccountName" class="control-label">Applicant</label>
+                <input asp-for="AccountName" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PetName" class="control-label">Pet</label>
+                <input asp-for="PetName" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationDate" class="control-label"></label>
+                <input asp-for="ApplicationDate" class="form-control" type="date" readonly />
+            </div>
+
+            
+            <div class="form-group">
+                <label asp-for="ApplicationReason" class="control-label"></label>
+                <textarea asp-for="ApplicationReason" class="form-control" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationExperience" class="control-label"></label>
+                <textarea asp-for="ApplicationExperience" class="form-control" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationComments" class="control-label"></label>
+                <textarea asp-for="ApplicationComments" class="form-control" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationStatus" class="control-label"></label>
+                <select asp-for="ApplicationStatus" class="form-control">
+                    <option value="0">Pending</option>
+                    <option value="1">Approved</option>
+                    <option value="2">Rejected</option>
+                </select>
+                <span asp-validation-for="ApplicationStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

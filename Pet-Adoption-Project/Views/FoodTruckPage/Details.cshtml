@@ -1,0 +1,25 @@
+﻿@model PetAdoption.Models.ViewModels.FoodTruckDetails
+
+<h1>Food Truck Details</h1>
+
+<div>
+    <h2>@Model.FoodTruck.Name</h2>
+    <p>@Model.FoodTruck.Description</p>
+    <p>Contact: @Model.FoodTruck.Contact</p>
+    <p>Location Address: @Model.FoodTruck.LocationAddress</p>
+</div>
+
+@if (Model.MenuItems != null && Model.MenuItems.Any())
+{
+    <h3>Menu Items</h3>
+    <ul>
+        @foreach (var item in Model.MenuItems)
+        {
+            <li>@item.Name (@item.Price.ToString("C"))</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No menu items are associated with this food truck.</p>
+}

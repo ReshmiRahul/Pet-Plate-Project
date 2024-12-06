@@ -1,0 +1,54 @@
+﻿@model PetAdoption.Models.FoodTruckDto
+
+@{
+    ViewData["Title"] = "Edit FoodTruck";
+}
+
+<h1>Edit FoodTruck</h1>
+
+<h4>FoodTruck</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Update" asp-route-id="@Model.FoodTruckId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FoodTruckId" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control"  />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Contact" class="control-label">Contact</label>
+                <input asp-for="Contact" class="form-control" />
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="LocationId" class="control-label">LocationId</label>
+                <input asp-for="LocationId" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
