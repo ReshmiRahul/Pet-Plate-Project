@@ -42,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFBhZ2VcTmV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/AccountPage/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFBhZ2VcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/ApplicationPage/ConfirmDelete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25QYWdlXENvbmZpcm1EZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -108,6 +112,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/LocationPage/New.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25QYWdlXE5ldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/LoginPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5QYWdlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/LoginPage/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5QYWdlXFByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/reshm/source/repos/Pet-Adoption-Project/Pet-Adoption-Project/Views/MenuItemPage/ConfirmDelete.cshtml]

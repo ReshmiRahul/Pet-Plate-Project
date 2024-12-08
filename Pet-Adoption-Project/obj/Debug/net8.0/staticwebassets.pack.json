@@ -5,8 +5,16 @@
       "PackagePath": "staticwebassets\\Pet-Adoption-Project.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\petadoption.styles.css",
+      "PackagePath": "staticwebassets\\css\\petadoption.styles.css"
+    },
+    {
       "Id": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\styles.css",
+      "PackagePath": "staticwebassets\\css\\styles.css"
     },
     {
       "Id": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\favicon.ico",

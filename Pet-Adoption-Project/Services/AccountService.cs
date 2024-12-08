@@ -1,295 +1,316 @@
 ﻿using PetAdoption.Interfaces;
-//using PetAdoption.Migrations;
 using PetAdoption.Models;
 using Microsoft.EntityFrameworkCore;
 using Pet_Adoption_Project.Data;
+using BCrypt.Net;
 
 namespace PetAdoption.Services
 {
     public class AccountService : IAccountService
     {
         private readonly ApplicationDbContext _context;
-        // dependency injection of database context
+
+        // Dependency injection of database context
         public AccountService(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // Login method
+        public async Task<(bool IsSuccess, string ErrorMessage)> LoginAsync(string username, string password)
+        {
+            bool isValidUser = await ValidateUserAsync(username, password);
 
+            if (!isValidUser)
+            {
+                return (false, "Invalid username or password.");
+            }
+
+            return (true, string.Empty);
+        }
+
+        public async Task<Account> Login(string username, string password)
+        {
+            // Your login logic here, for example:
+            // Query the database to validate the username and password
+            var account = await _context.Accounts
+                                          .FirstOrDefaultAsync(a => a.AccountName == username && a.AccountPassword == password);
+
+            return account;  // Return the found account, or null if not found
+        }
+        // Logout method
+        public async Task LogoutAsync()
+        {
+            // Clear session or cookies for logout
+            await Task.CompletedTask;
+        }
+
+        // List all accounts
         public async Task<IEnumerable<AccountDto>> ListAccounts()
         {
-            // Fetch all accounts, including their related Location data
-            List<Account> Accounts = await _context.Accounts
+            List<Account> accounts = await _context.Accounts
                 .Include(a => a.Location) // Eagerly load the Location entity
                 .ToListAsync();
 
-            // Map the accounts to AccountDto
-            List<AccountDto> AccountDtos = Accounts.Select(Account => new AccountDto()
+            List<AccountDto> accountDtos = accounts.Select(account => new AccountDto()
             {
-                AccountId = Account.AccountId,
-                AccountName = Account.AccountName,
-                AccountEmail = Account.AccountEmail,
-                AccountRole = Account.AccountRole,
-                AccountPassword = Account.AccountPassword,
-                LocationId = Account.LocationId,
-                LocationAddress = Account.Location?.Address // Safe access with null check
+                AccountId = account.AccountId,
+                AccountName = account.AccountName,
+                AccountEmail = account.AccountEmail,
+                AccountRole = account.AccountRole,
+                AccountPassword = account.AccountPassword,
+                LocationId = account.LocationId,
+                LocationAddress = account.Location?.Address
             }).ToList();
 
-            return AccountDtos;
+            return accountDtos;
         }
 
-
-
+        // Find account by ID
         public async Task<AccountDto?> FindAccount(int id)
         {
-            // Include Location in the query to fetch the related data
-            var Account = await _context.Accounts
-                .Include(a => a.Location) // Eagerly load the Location entity
+            var account = await _context.Accounts
+                .Include(a => a.Location)
                 .FirstOrDefaultAsync(c => c.AccountId == id);
 
-            // If no account is found, return null
-            if (Account == null)
+            if (account == null)
             {
                 return null;
             }
 
-            // Map the account to AccountDto
-            AccountDto AccountDto = new AccountDto()
+            return new AccountDto()
             {
-                AccountId = Account.AccountId,
-                AccountName = Account.AccountName,
-                AccountEmail = Account.AccountEmail,
-                AccountRole = Account.AccountRole,
-                AccountPassword = Account.AccountPassword,
-                LocationId = Account.LocationId,
-                LocationAddress = Account.Location?.Address // Safe null check
+                AccountId = account.AccountId,
+                AccountName = account.AccountName,
+                AccountEmail = account.AccountEmail,
+                AccountRole = account.AccountRole,
+                AccountPassword = account.AccountPassword,
+                LocationId = account.LocationId,
+                LocationAddress = account.Location?.Address
             };
-
-            return AccountDto;
         }
 
-
-
-        public async Task<ServiceResponse> UpdateAccount(AccountDto AccountDto)
+        // Update an account
+        public async Task<ServiceResponse> UpdateAccount(int id, AccountDto accountDto)
         {
-            ServiceResponse serviceResponse = new();
+            var response = new ServiceResponse();
 
-            // Check if the account exists in the database
-            var existingAccount = await _context.Accounts
-                .FirstOrDefaultAsync(a => a.AccountId == AccountDto.AccountId);
+            // Find the food truck by id
+            var account = await _context.Accounts
+                .Include(ft => ft.Location)  // Include related entities if necessary
+                .FirstOrDefaultAsync(ft => ft.AccountId == id);
 
-            if (existingAccount == null)
-            {
-                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
-                serviceResponse.Messages.Add("Account not found");
-                return serviceResponse;
-            }
-
-            // Update the existing account with new values
-            existingAccount.AccountName = AccountDto.AccountName;
-            existingAccount.AccountEmail = AccountDto.AccountEmail;
-            existingAccount.AccountRole = AccountDto.AccountRole;
-            existingAccount.LocationId = AccountDto.LocationId;
-
-            try
-            {
-                // Save changes to the database
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
-                serviceResponse.Messages.Add("A concurrency error occurred while updating the record");
-                return serviceResponse;
-            }
-            catch (Exception ex)
-            {
-                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
-                serviceResponse.Messages.Add($"An unexpected error occurred: {ex.Message}");
-                return serviceResponse;
-            }
-
-            // Success response
-            serviceResponse.Status = ServiceResponse.ServiceStatus.Updated;
-            serviceResponse.Messages.Add("Account updated successfully");
-            return serviceResponse;
-        }
-
-
-
-        public async Task<ServiceResponse> AddAccount(AccountDto AccountDto)
-        {
-            ServiceResponse serviceResponse = new();
-
-
-            // Create instance of Account
-            Account Account = new Account()
-            {
-                AccountName = AccountDto.AccountName,
-                AccountEmail = AccountDto.AccountEmail,
-                AccountRole = AccountDto.AccountRole,
-                AccountPassword = AccountDto.AccountPassword,
-                LocationId = AccountDto.LocationId,
-            };
-            // SQL Equivalent: Insert into Accounts (..) values (..)
-
-            try
-            {
-                _context.Accounts.Add(Account);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
-                serviceResponse.Messages.Add("There was an error adding the Account.");
-                serviceResponse.Messages.Add(ex.Message);
-            }
-
-
-            serviceResponse.Status = ServiceResponse.ServiceStatus.Created;
-            serviceResponse.CreatedId = Account.AccountId;
-            return serviceResponse;
-        }
-
-
-        public async Task<ServiceResponse> DeleteAccount(int id)
-        {
-            ServiceResponse response = new();
-            // account Item must exist in the first place
-            var Account = await _context.Accounts.FindAsync(id);
-            if (Account == null)
+            if (account == null)
             {
                 response.Status = ServiceResponse.ServiceStatus.NotFound;
-                response.Messages.Add("Account cannot be deleted because it does not exist.");
+                response.Messages.Add("Account not found.");
                 return response;
             }
 
+            // Update the food truck properties with the data from the FoodTruckDto
+            account.AccountName = accountDto.AccountName;
+            account.AccountPassword = accountDto.AccountPassword;
+            account.AccountEmail = accountDto.AccountEmail;
+            account.AccountRole = accountDto.AccountRole;
+            account.LocationId = accountDto.LocationId;
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            response.Status = ServiceResponse.ServiceStatus.Updated;
+            return response;
+        }
+
+        // Add a new account
+        public async Task<ServiceResponse> AddAccount(AccountDto accountDto)
+        {
+            ServiceResponse response = new();
+
+            var account = new Account
+            {
+                AccountName = accountDto.AccountName,
+                AccountPassword = accountDto.AccountPassword,
+                AccountEmail = accountDto.AccountEmail,
+                AccountRole = accountDto.AccountRole,
+                LocationId = accountDto.LocationId
+            };
+
             try
             {
-                _context.Accounts.Remove(Account);
+                _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
 
+                response.Status = ServiceResponse.ServiceStatus.Created;
+                response.CreatedId = account.AccountId;
             }
             catch (Exception ex)
             {
                 response.Status = ServiceResponse.ServiceStatus.Error;
-                response.Messages.Add("Error encountered while deleting the Account");
+                response.Messages.Add("Error adding account.");
+                response.Messages.Add(ex.Message);
+            }
+
+            return response;
+        }
+
+        // Delete an account
+        public async Task<ServiceResponse> DeleteAccount(int id)
+        {
+            ServiceResponse response = new();
+
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                response.Status = ServiceResponse.ServiceStatus.NotFound;
+                response.Messages.Add("Account not found.");
                 return response;
             }
 
-            response.Status = ServiceResponse.ServiceStatus.Deleted;
+            try
+            {
+                _context.Accounts.Remove(account);
+                await _context.SaveChangesAsync();
+
+                response.Status = ServiceResponse.ServiceStatus.Deleted;
+            }
+            catch (Exception ex)
+            {
+                response.Status = ServiceResponse.ServiceStatus.Error;
+                response.Messages.Add($"An error occurred: {ex.Message}");
+            }
 
             return response;
-
         }
 
+        // List accounts linked to a pet
         public async Task<IEnumerable<AccountDto>> ListAccountsForPet(int id)
         {
-            // join AccountPet on Accounts.Accountid = AccountPet.Accountid WHERE AccountPet.Petid = {id}
-            List<Account> Accounts = await _context.Accounts
-                .Where(c => c.Pets.Any(p => p.PetId==id))
+            var accounts = await _context.Accounts
+                .Where(c => c.Pets.Any(p => p.PetId == id))
                 .ToListAsync();
 
-            // empty list of data transfer object AccountDto
-            List<AccountDto> AccountDtos = new List<AccountDto>();
-            // foreach account record in database
-            foreach (Account Account in Accounts)
+            return accounts.Select(account => new AccountDto()
             {
-                // create new instance of AccountDto, add to list
-                AccountDtos.Add(new AccountDto()
-                {
-                    AccountId = Account.AccountId,
-                    AccountName = Account.AccountName,
-                    AccountEmail = Account.AccountEmail,
-                    AccountRole = Account.AccountRole,
-                    AccountPassword = Account.AccountPassword,
-                    LocationId = Account.LocationId,
-                    LocationAddress = Account.Location?.Address
-
-                });
-            }
-            // return AccountDtos
-            return AccountDtos;
-
+                AccountId = account.AccountId,
+                AccountName = account.AccountName,
+                AccountEmail = account.AccountEmail,
+                AccountRole = account.AccountRole,
+                AccountPassword = account.AccountPassword,
+                LocationId = account.LocationId,
+                LocationAddress = account.Location?.Address
+            }).ToList();
         }
 
-        public async Task<ServiceResponse> LinkAccountToPet(int AccountId, int PetId)
+        // Link account to a pet
+        public async Task<ServiceResponse> LinkAccountToPet(int accountId, int petId)
         {
             ServiceResponse serviceResponse = new();
 
-            Account? Account = await _context.Accounts
-                .Include(c => c.Pets)
-                .Where(c => c.AccountId== AccountId)
-                .FirstOrDefaultAsync();
-            Pet? Pet = await _context.Pets.FindAsync(PetId);
+            var account = await _context.Accounts.Include(c => c.Pets).FirstOrDefaultAsync(c => c.AccountId == accountId);
+            var pet = await _context.Pets.FindAsync(petId);
 
-            // Data must link to a valid entity
-            if (Pet == null || Account == null) { 
+            if (account == null || pet == null)
+            {
                 serviceResponse.Status = ServiceResponse.ServiceStatus.NotFound;
-                if (Pet == null)
-                {
-                    serviceResponse.Messages.Add("Pet was not found. ");
-                }
-                if (Account == null)
-                {
-                    serviceResponse.Messages.Add("Account was not found.");
-                }
+                if (account == null) serviceResponse.Messages.Add("Account not found.");
+                if (pet == null) serviceResponse.Messages.Add("Pet not found.");
                 return serviceResponse;
             }
+
             try
             {
-                Account.Pets.Add(Pet);
-                _context.SaveChanges();
+                account.Pets.Add(pet);
+                await _context.SaveChangesAsync();
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Created;
             }
-            catch(Exception Ex)
+            catch (Exception ex)
             {
-                serviceResponse.Messages.Add("There was an issue linking the Pet to the Account");
-                serviceResponse.Messages.Add(Ex.Message);
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
+                serviceResponse.Messages.Add($"An error occurred: {ex.Message}");
             }
 
-
-            serviceResponse.Status = ServiceResponse.ServiceStatus.Created;
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse> UnlinkAccountFromPet(int AccountId, int PetId)
+        // Unlink account from a pet
+        public async Task<ServiceResponse> UnlinkAccountFromPet(int accountId, int petId)
         {
             ServiceResponse serviceResponse = new();
 
-            Account? Account = await _context.Accounts
-                .Include(c => c.Pets)
-                .Where(c => c.AccountId == AccountId)
-                .FirstOrDefaultAsync();
-            Pet? Pet = await _context.Pets.FindAsync(PetId);
+            var account = await _context.Accounts.Include(c => c.Pets).FirstOrDefaultAsync(c => c.AccountId == accountId);
+            var pet = await _context.Pets.FindAsync(petId);
 
-            // Data must link to a valid entity
-            if (Pet == null || Account == null)
+            if (account == null || pet == null)
             {
                 serviceResponse.Status = ServiceResponse.ServiceStatus.NotFound;
-                if (Pet == null)
-                {
-                    serviceResponse.Messages.Add("Pet was not found. ");
-                }
-                if (Account == null)
-                {
-                    serviceResponse.Messages.Add("Account was not found.");
-                }
+                if (account == null) serviceResponse.Messages.Add("Account not found.");
+                if (pet == null) serviceResponse.Messages.Add("Pet not found.");
                 return serviceResponse;
             }
+
             try
             {
-                Account.Pets.Remove(Pet);
-                _context.SaveChanges();
+                account.Pets.Remove(pet);
+                await _context.SaveChangesAsync();
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Deleted;
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                serviceResponse.Messages.Add("There was an issue unlinking the Pet to the Account");
-                serviceResponse.Messages.Add(Ex.Message);
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
+                serviceResponse.Messages.Add($"An error occurred: {ex.Message}");
             }
 
-
-            serviceResponse.Status = ServiceResponse.ServiceStatus.Deleted;
             return serviceResponse;
         }
+
+        // Validate user credentials
+        public async Task<bool> ValidateUserAsync(string username, string password)
+        {
+            // Find the account by username from the database
+            var account = await _context.Accounts.SingleOrDefaultAsync(a => a.AccountName == username);
+
+            if (account == null)
+                return false;
+
+            // Compare the plain password directly with the one stored in the database
+            return account.AccountPassword == password;
+        }
+
+        public async Task CreateAccountAsync(string username, string password)
+        {
+            var account = new Account
+            {
+                AccountName = username,
+                AccountPassword = password // Storing plain password directly
+            };
+
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<AccountDto?> FindByUsernameAsync(string username)
+        {
+            var account = await _context.Accounts
+                .Where(a => a.AccountName == username)
+                .Select(a => new AccountDto
+                {
+                    AccountId = a.AccountId,
+                    AccountName = a.AccountName,
+                    AccountEmail = a.AccountEmail,
+                    AccountRole = a.AccountRole,
+                    LocationId = a.LocationId,
+                    LocationAddress = a.Location.Address
+                })
+                .FirstOrDefaultAsync();
+
+            return account;
+        }
+
+        public Task<ServiceResponse> UpdateAccount(AccountDto AccountDto)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

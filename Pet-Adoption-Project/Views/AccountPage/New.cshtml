@@ -6,31 +6,41 @@
 
 <h1>Create New Account</h1>
 
-<h4>Account</h4>
+<h4>Account Information</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Add">
+    <div class="col-md-6">
+        <form asp-action="Add" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <!-- Name -->
             <div class="form-group">
-                <label asp-for="AccountName" class="control-label"></label>
+                <label asp-for="AccountName" class="control-label">AccountName</label>
                 <input asp-for="AccountName" class="form-control" />
                 <span asp-validation-for="AccountName" class="text-danger"></span>
             </div>
 
+            <!-- Description -->
             <div class="form-group">
-                <label asp-for="AccountEmail" class="control-label"></label>
-                <input asp-for="AccountEmail" class="form-control" />
+                <label asp-for="AccountEmail" class="control-label">AccountEmail</label>
+                <textarea asp-for="AccountEmail" class="form-control"></textarea>
                 <span asp-validation-for="AccountEmail" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="AccountRole" class="control-label"></label>
-                <input asp-for="AccountRole" class="form-control" />
-                <span asp-validation-for="AccountRole" class="text-danger"></span>
+                <label asp-for="AccountPassword" class="control-label">AccountPassword</label>
+                <textarea asp-for="AccountPassword" class="form-control"></textarea>
+                <span asp-validation-for="AccountPassword" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label asp-for="AccountRole" class="control-label">AccountRole</label>
+                <textarea asp-for="AccountRole" class="form-control"></textarea>
+                <span asp-validation-for="AccountRole" class="text-danger"></span>
+            </div>
+            
+
+            <!-- Location -->
             <div class="form-group">
                 <label asp-for="LocationId" class="control-label">Location Name</label>
                 <select asp-for="LocationId" class="form-control">
@@ -42,26 +52,18 @@
                 </select>
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
-
+            <!-- Submit Button -->
             <div class="form-group">
-                <label asp-for="AccountPassword" class="control-label"></label>
-                <input asp-for="AccountPassword" class="form-control" type="password" />
-                <span asp-validation-for="AccountPassword" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create Account" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="List">Back to Account</a>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

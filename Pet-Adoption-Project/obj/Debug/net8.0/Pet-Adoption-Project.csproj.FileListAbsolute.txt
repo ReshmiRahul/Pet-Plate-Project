@@ -144,3 +144,9 @@ C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\obj\Debug\
 C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\obj\Debug\net8.0\Pet-Adoption-Project.pdb
 C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\obj\Debug\net8.0\Pet-Adoption-Project.genruntimeconfig.cache
 C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\obj\Debug\net8.0\ref\Pet-Adoption-Project.dll
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\obj\Debug\net8.0\Pet-Adoption-Project.sourcelink.json
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\reshm\source\repos\Pet-Adoption-Project\Pet-Adoption-Project\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll

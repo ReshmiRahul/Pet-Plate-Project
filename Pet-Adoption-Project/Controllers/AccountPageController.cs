@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PetAdoption.Interfaces;
 using PetAdoption.Models;
 using PetAdoption.Models.ViewModels;
@@ -13,12 +14,14 @@ namespace PetAdoption.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IPetService _petService;
+        private readonly ILocationService _locationService;
 
         // Dependency injection of service interfaces
-        public AccountPageController(IAccountService accountService, IPetService petService)
+        public AccountPageController(IAccountService accountService, IPetService petService, ILocationService locationService)
         {
             _accountService = accountService;
             _petService = petService;
+            _locationService = locationService;
         }
 
         // Default action: redirect to list of accounts
@@ -58,9 +61,16 @@ namespace PetAdoption.Controllers
         }
 
         // GET AccountPage/New
-        public ActionResult New()
+        public async Task<IActionResult> New()
         {
-            return View();
+            var locations = await _locationService.ListLocations(); // Fetch locations
+            ViewBag.Locations = locations.Select(location => new SelectListItem
+            {
+                Value = location.LocationId.ToString(),
+                Text = location.City.ToString(),
+            }).ToList();
+
+            return View(new AccountDto()); // Return an empty DTO for the form
         }
 
         // POST AccountPage/Add
@@ -98,7 +108,7 @@ namespace PetAdoption.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, AccountDto accountDto)
         {
-            ServiceResponse response = await _accountService.UpdateAccount(accountDto);
+            ServiceResponse response = await _accountService.UpdateAccount(id, accountDto);
 
             if (response.Status == ServiceResponse.ServiceStatus.Updated)
             {

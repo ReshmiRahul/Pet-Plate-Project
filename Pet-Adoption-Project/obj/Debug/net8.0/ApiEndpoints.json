@@ -8,7 +8,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "AccountDto",
+        "Name": "accountDto",
         "Type": "PetAdoption.Models.AccountDto",
         "IsRequired": true
       }
@@ -89,7 +89,38 @@
   },
   {
     "ContainingType": "PetAdoption.Controllers.AccountController",
-    "Method": "UpdateAccount",
+    "Method": "Login",
+    "RelativePath": "api/Account/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PetAdoption.Controllers.AccountController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Account/Profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PetAdoption.Controllers.AccountController",
+    "Method": "Update",
     "RelativePath": "api/Account/Update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -101,7 +132,7 @@
         "IsRequired": true
       },
       {
-        "Name": "AccountDto",
+        "Name": "accountDto",
         "Type": "PetAdoption.Models.AccountDto",
         "IsRequired": true
       }
@@ -723,6 +754,247 @@
         "Name": "PetDto",
         "Type": "PetAdoption.Models.PetDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Index",
+    "RelativePath": "ApplicationPage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Add",
+    "RelativePath": "ApplicationPage/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ApplicationID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PetId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationStatus",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationReason",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationExperience",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationComments",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PetName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FoodTruckId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "FoodTruckName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "ConfirmDelete",
+    "RelativePath": "ApplicationPage/ConfirmDelete/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Delete",
+    "RelativePath": "ApplicationPage/Delete/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Details",
+    "RelativePath": "ApplicationPage/Details/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Edit",
+    "RelativePath": "ApplicationPage/Edit/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "List",
+    "RelativePath": "ApplicationPage/List",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "New",
+    "RelativePath": "ApplicationPage/New",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApplicationPageController",
+    "Method": "Update",
+    "RelativePath": "ApplicationPage/Update/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "ApplicationID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PetId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationStatus",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationReason",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationExperience",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ApplicationComments",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PetName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FoodTruckId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "FoodTruckName",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

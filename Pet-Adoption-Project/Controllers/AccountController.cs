@@ -3,12 +3,14 @@ using PetAdoption.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using PetAdoption.Services;
+using PetAdoption.Models.ViewModels;
 
 namespace PetAdoption.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
 
@@ -18,6 +20,45 @@ namespace PetAdoption.Controllers
             _accountService = AccountService;
         }
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            var account = await _accountService.Login(username, password);
+            if (account == null)
+            {
+                return Unauthorized(new { Message = "Invalid credentials" });
+            }
+
+            // Store AccountId in session
+            HttpContext.Session.SetInt32("AccountId", account.AccountId);
+
+            // Redirect to Profile page after login
+            return RedirectToAction("GetProfile");
+        }
+
+        [HttpGet("Profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            // Retrieve AccountId from session
+            var accountId = HttpContext.Session.GetInt32("AccountId");
+
+            if (accountId == null)
+            {
+                // If no AccountId in session, redirect to login
+                return RedirectToAction("Login");
+            }
+
+            // Get the account details using the AccountId
+            var account = await _accountService.FindAccount(accountId.Value);
+
+            if (account == null)
+            {
+                return NotFound(new { Message = "Account not found" });
+            }
+
+            // Return the profile view with account details
+            return View("Profile", account);  // Make sure you have a Profile.cshtml view in the correct location
+        }
 
         /// <summary>
         /// Returns a list of Accounts
@@ -54,7 +95,7 @@ namespace PetAdoption.Controllers
         [HttpGet(template: "Find/{id}")]
         public async Task<ActionResult<AccountDto>> FindAccount(int id)
         {
-           
+
             var Account = await _accountService.FindAccount(id);
 
             // if the Account could not be located, return 404 Not Found
@@ -87,30 +128,23 @@ namespace PetAdoption.Controllers
         /// ->
         /// Response Code: 204 No Content
         /// </example>
-        [HttpPut(template: "Update/{id}")]
-        public async Task<ActionResult> UpdateAccount(int id, AccountDto AccountDto)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] AccountDto accountDto)
         {
-            // {id} in URL must match AccountId in POST Body
-            if (id != AccountDto.AccountId)
+            if (!ModelState.IsValid)
             {
-                //400 Bad Request
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
-            ServiceResponse response = await _accountService.UpdateAccount(AccountDto);
-
-            if (response.Status == ServiceResponse.ServiceStatus.NotFound)
+            var response = await _accountService.UpdateAccount(id, accountDto);
+            if (response.Status == ServiceResponse.ServiceStatus.Updated)
             {
-                return NotFound(response.Messages);
+                return Ok(new { Message = "Account updated successfully" });
             }
-            else if (response.Status == ServiceResponse.ServiceStatus.Error)
+            else
             {
-                return StatusCode(500, response.Messages);
+                return BadRequest(new { Message = "Failed to update Account", Errors = response.Messages });
             }
-
-            //Status = Updated
-            return NoContent();
-
         }
 
         /// <summary>
@@ -132,23 +166,30 @@ namespace PetAdoption.Controllers
         /// Response Code: 201 Created
         /// Response Headers: Location: api/Account/Find/{AccountId}
         /// </example>
-        [HttpPost(template: "Add")]
-        public async Task<ActionResult<Account>> AddAccount(AccountDto AccountDto)
+        [HttpPost("Add")]
+        public async Task<ActionResult<Account>> AddAccount(AccountDto accountDto)
         {
-            ServiceResponse response = await _accountService.AddAccount(AccountDto);
+            // Call the service method to add the account
+            ServiceResponse response = await _accountService.AddAccount(accountDto);
 
+            // Handle the case when the account is not found or there's an error
             if (response.Status == ServiceResponse.ServiceStatus.NotFound)
             {
-                return NotFound(response.Messages);
+                return NotFound(response.Messages); // Return 404 if not found
             }
             else if (response.Status == ServiceResponse.ServiceStatus.Error)
             {
-                return StatusCode(500, response.Messages);
+                return StatusCode(500, response.Messages); // Return 500 for error in the service
             }
 
-            // returns 201 Created with Location
-            return Created($"api/Account/FindAccount/{response.CreatedId}",AccountDto);
+            // If successful, return a 201 Created status with the location of the new resource
+            return CreatedAtAction(
+                nameof(FindAccount), // Action method name to retrieve the created resource (adjust to your action)
+                new { id = response.CreatedId }, // Route parameters (e.g., account ID)
+                accountDto // The body of the response contains the created AccountDto
+            );
         }
+
 
         /// <summary>
         /// Deletes the Account
@@ -180,6 +221,6 @@ namespace PetAdoption.Controllers
 
             return NoContent();
 
-        }       
+        }
     }
 }

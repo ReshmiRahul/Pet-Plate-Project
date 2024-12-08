@@ -1,0 +1,21 @@
+﻿@model PetAdoption.Models.Account
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Welcome to Your Profile</h2>
+
+<div>
+    <h3>Account Information</h3>
+    <p><strong>Account ID:</strong> @Model.AccountId</p>
+    <p><strong>Username:</strong> @Model.AccountName</p>
+    <p><strong>Email:</strong> @Model.AccountEmail</p>
+    <p><strong>Full Name:</strong> @Model.AccountRole</p>
+    <!-- Add other account properties as needed -->
+</div>
+
+<!-- Optionally, provide a logout button -->
+<form method="post" asp-action="Logout">
+    <button type="submit">Logout</button>
+</form>

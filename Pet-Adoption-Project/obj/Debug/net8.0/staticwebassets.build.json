@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WO54+iZgmn1cq20fGO79tCaqG+pwByGDSkMzS+2YBRo=",
+  "Hash": "q/IuXPZcW8W2c2B2VUV1E76mjIBxk0aF3KjnMvnx01o=",
   "Source": "Pet-Adoption-Project",
   "BasePath": "_content/Pet-Adoption-Project",
   "Mode": "Default",
@@ -1195,6 +1195,25 @@
       "OriginalItemSpec": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Pet-Adoption-Project.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\petadoption.styles.css",
+      "SourceId": "Pet-Adoption-Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\",
+      "BasePath": "_content/Pet-Adoption-Project",
+      "RelativePath": "css/petadoption.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\petadoption.styles.css"
+    },
+    {
       "Identity": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\site.css",
       "SourceId": "Pet-Adoption-Project",
       "SourceType": "Discovered",
@@ -1212,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\css\\styles.css",
+      "SourceId": "Pet-Adoption-Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\",
+      "BasePath": "_content/Pet-Adoption-Project",
+      "RelativePath": "css/styles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\styles.css"
     },
     {
       "Identity": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\wwwroot\\favicon.ico",

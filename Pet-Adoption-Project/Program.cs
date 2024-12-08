@@ -7,12 +7,14 @@ using PetAdoption.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Associate service interfaces with their implementations
+// Add service interfaces with their implementations
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
@@ -20,21 +22,48 @@ builder.Services.AddScoped<IFoodTruckService, FoodTruckService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireNonAlphanumeric = false; // Optional: adjust password settings
+    options.Password.RequiredLength = 8; // Optional: set minimum password length
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Add session services
+builder.Services.AddDistributedMemoryCache(); // Session cache
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true; // Makes the session cookie more secure
+    options.Cookie.IsEssential = true; // Essential for the app to function
+});
+
 builder.Services.AddControllersWithViews();
+
+// Add Swagger for API documentation
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
+
+    // Enable Swagger in Development mode
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pet Adoption API V1");
+        c.RoutePrefix = string.Empty; // Makes Swagger available at the app root
+    });
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -43,6 +72,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Enable session middleware here
+app.UseSession(); // <-- Add this line to enable session functionality
+
+app.UseAuthentication(); // Ensure authentication middleware is added
 app.UseAuthorization();
 
 app.MapControllerRoute(
