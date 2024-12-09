@@ -33,7 +33,7 @@ namespace PetAdoption.Controllers
                 HttpContext.Session.SetString("UserRole", "Admin");
 
                 // Redirect to Home/Index for admin
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("List", "AccountPage");
             }
 
             // Regular user login
