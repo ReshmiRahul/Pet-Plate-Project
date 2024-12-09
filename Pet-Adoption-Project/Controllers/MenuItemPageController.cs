@@ -36,9 +36,42 @@ namespace PetAdoption.Controllers
         }
 
         // GET: MenuItemPage/Details/{id}
-        // GET: MenuItemPage/Details/{id}
         [HttpGet]
         public async Task<IActionResult> Details(int id)
+        {
+            // Fetch the menu item details using the service layer
+            var menuItemDto = await _menuItemService.FindMenuItem(id);
+
+            if (menuItemDto == null)
+            {
+                return View("Error", new ErrorViewModel
+                {
+                    Errors = new List<string> { "Could not find menu item" }
+                });
+            }
+
+            // Fetch associated food truck details
+            var foodTruckDto = await _foodTruckService.FindFoodTruck(menuItemDto.FoodTruckId);
+
+            // Create the view model and pass it to the view
+            var menuItemDetails = new MenuItemDetails
+            {
+                MenuItem = menuItemDto,
+                AssociatedFoodTruck = foodTruckDto
+            };
+
+            return View(menuItemDetails);
+        }
+
+        public async Task<IActionResult> Lists()
+        {
+            IEnumerable<MenuItemDto?> menuItemDtos = await _menuItemService.ListMenuItems();
+            return View(menuItemDtos);
+        }
+
+        // GET: MenuItemPage/Details/{id}
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
         {
             // Fetch the menu item details using the service layer
             var menuItemDto = await _menuItemService.FindMenuItem(id);

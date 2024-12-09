@@ -64,6 +64,41 @@ namespace PetAdoption.Controllers
             return View(foodTruckInfo); // Make sure the correct model is passed here
         }
 
+        public async Task<IActionResult> Lists()
+        {
+            IEnumerable<FoodTruckDto?> foodTruckDtos = await _foodTruckService.ListFoodTrucks();
+            return View(foodTruckDtos);
+        }
+
+        // GET: FoodTruckPage/Details/{id}
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
+        {
+            // Fetch the food truck details using the service layer
+            FoodTruckDto? foodTruckDto = await _foodTruckService.FindFoodTruck(id);
+
+            // Fetch associated menu items (or other related entities)
+            IEnumerable<MenuItemDto> associatedMenuItems = await _menuItemService.ListMenuItems();
+
+            // Handle null case for the primary object
+            if (foodTruckDto == null)
+            {
+                return View("Error", new ErrorViewModel
+                {
+                    Errors = new List<string> { "Could not find food truck" }
+                });
+            }
+
+            // Create the view model and pass it to the view
+            FoodTruckDetails foodTruckInfo = new FoodTruckDetails
+            {
+                FoodTruck = foodTruckDto,
+                MenuItems = associatedMenuItems
+            };
+
+            return View(foodTruckInfo); // Make sure the correct model is passed here
+        }
+
 
 
         // POST FoodTruckPage/Add

@@ -31,9 +31,38 @@ namespace PetAdoption.Controllers
             return View(petDtos);
         }
 
+        public async Task<IActionResult> Lists()
+        {
+            IEnumerable<PetDto> petDtos = await _petService.ListPets();
+            return View(petDtos);
+        }
+
         // GET: PetPage/Details/{id}
         [HttpGet]
         public async Task<IActionResult> Details(int id)
+        {
+            PetDto? petDto = await _petService.FindPet(id);
+
+            if (petDto == null)
+            {
+                return View("Error", new ErrorViewModel { Errors = new List<string> { "Could not find pet" } });
+            }
+            else
+            {
+                // Create a new PetDetails object
+                PetDetails petDetails = new PetDetails
+                {
+                    Pet = petDto,
+                    AssociatedAccounts = null, // Populate with actual data if needed
+                    PetApplications = null // Populate with actual data if needed
+                };
+
+                return View(petDetails);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
         {
             PetDto? petDto = await _petService.FindPet(id);
 

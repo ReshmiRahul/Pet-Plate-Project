@@ -101,6 +101,17 @@ namespace PetAdoption.Controllers
 
             return View(new AccountDto()); // Return an empty DTO for the form
         }
+        public async Task<IActionResult> NewAccount()
+        {
+            var locations = await _locationService.ListLocations(); // Fetch locations
+            ViewBag.Locations = locations.Select(location => new SelectListItem
+            {
+                Value = location.LocationId.ToString(),
+                Text = location.City.ToString(),
+            }).ToList();
+
+            return View(new AccountDto()); // Return an empty DTO for the form
+        }
 
         // POST AccountPage/Add
         [HttpPost]
@@ -110,7 +121,7 @@ namespace PetAdoption.Controllers
 
             if (response.Status == ServiceResponse.ServiceStatus.Created)
             {
-                return RedirectToAction("Details", "AccountPage", new { id = response.CreatedId });
+                return RedirectToAction("Index", "LoginPage", new { id = response.CreatedId });
             }
             else
             {
