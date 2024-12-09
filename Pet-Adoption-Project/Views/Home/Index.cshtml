@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var layout = Context.Items["Layout"] as string ?? "_HomeLayout"; 
+    Layout = layout;
 }
 
 <div class="text-center">

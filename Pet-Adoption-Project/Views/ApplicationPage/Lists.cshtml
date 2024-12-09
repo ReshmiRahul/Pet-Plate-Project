@@ -2,9 +2,15 @@
 
 @{
     ViewData["Title"] = "Application List";
+    var layout = Context.Items["Layout"] as string ?? "_LayoutAdmin"; // Default to "_Layout" if not set
+    Layout = layout;
 }
 
 <h1>Application List</h1>
+
+<p>
+    <a asp-action="New" class="btn btn-primary">Create New Application</a>
+</p>
 
 <table class="table">
     <thead>
@@ -22,15 +28,9 @@
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
                     <td>@Html.DisplayFor(modelItem => item.PetName)</td>
-                   
+
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ApplicationID" class="btn btn-warning">Confirm</a>
-                        <a asp-action="Details" asp-route-id="@item.ApplicationID" class="btn btn-info">Details</a>
-                        <form asp-action="ConfirmDelete" asp-route-id="@item.ApplicationID" method="get" style="display:inline-block;">
-                            <input type="submit" value="Delete" class="btn btn-danger" />
-                        </form>
-
-
+                        <a asp-action="Detail" asp-route-id="@item.ApplicationID" class="btn btn-info">Detail</a>
                     </td>
                 </tr>
             }

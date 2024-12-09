@@ -33,8 +33,15 @@ namespace PetAdoption.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var accountId = HttpContext.Session.GetInt32("AccountId");
+            var userRole = HttpContext.Session.GetString("UserRole");
 
+            if (userRole == "Admin")
+            {
+                // Redirect admin to a different page if necessary
+                return RedirectToAction("Index", "Home");
+            }
+
+            var accountId = HttpContext.Session.GetInt32("AccountId");
             if (accountId == null)
             {
                 return RedirectToAction("Index", "LoginPage");
@@ -46,8 +53,9 @@ namespace PetAdoption.Controllers
                 return View("Error", new ErrorViewModel { Errors = new List<string> { "Account not found" } });
             }
 
-            return View(account); // Make sure there's a Profile.cshtml to render the account details
+            return View(account);
         }
+
 
 
 

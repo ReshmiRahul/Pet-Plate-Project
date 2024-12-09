@@ -26,6 +26,17 @@ namespace PetAdoption.Controllers
                 return View(model);
             }
 
+            // Check if admin credentials are provided
+            if (model.Username == "admin" && model.Password == "admin")
+            {
+                // Optionally, store a session variable indicating admin login
+                HttpContext.Session.SetString("UserRole", "Admin");
+
+                // Redirect to Home/Index for admin
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Regular user login
             var account = await _accountService.Login(model.Username, model.Password);
             if (account == null)
             {
@@ -33,10 +44,13 @@ namespace PetAdoption.Controllers
                 return View(model);
             }
 
-            // Store AccountId in session
+            // Store AccountId in session for regular users
             HttpContext.Session.SetInt32("AccountId", account.AccountId);
+            HttpContext.Session.SetString("UserRole", "User");
 
+            // Redirect to Profile for regular users
             return RedirectToAction("Profile", "AccountPage");
         }
+
     }
 }

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit Account";
+    var layout = Context.Items["Layout"] as string ?? "_LayoutAdmin"; // Default to "_Layout" if not set
+    Layout = layout;
 }
 
 <h1>Edit Account</h1>

@@ -58,9 +58,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pet Adoption API V1");
-        c.RoutePrefix = string.Empty; // Makes Swagger available at the app root
+        c.RoutePrefix = "swagger"; // Swagger is now available at /swagger
     });
 }
+
 else
 {
     app.UseExceptionHandler("/Home/Error");
@@ -77,6 +78,7 @@ app.UseSession(); // <-- Add this line to enable session functionality
 
 app.UseAuthentication(); // Ensure authentication middleware is added
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

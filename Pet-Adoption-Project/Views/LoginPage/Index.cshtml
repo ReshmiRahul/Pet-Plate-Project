@@ -1,5 +1,11 @@
 ﻿@model PetAdoption.Models.ViewModels.LoginViewModel
 
+@{
+    var layout = Context.Items["Layout"] as string ?? "_LoginLayout"; 
+    Layout = layout;
+}
+
+
 <div class="login-container">
     <h2>Login</h2>
     <form asp-action="Login" method="post">

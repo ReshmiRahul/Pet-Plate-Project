@@ -30,9 +30,38 @@ public class ApplicationPageController : Controller
         return View(applicationDtos);
     }
 
+    [HttpGet("Lists")]
+    public async Task<IActionResult> Lists()
+    {
+        var applicationDtos = await _applicationService.ListApplications();
+        return View(applicationDtos);
+    }
+
     // GET: ApplicationPage/Details/{id}
     [HttpGet("Details/{id}")]
     public async Task<IActionResult> Details(int id)
+    {
+        var applicationDto = await _applicationService.FindApplication(id);
+        if (applicationDto == null)
+        {
+            return View("Error", new ErrorViewModel { Errors = new List<string> { "Application not found." } });
+        }
+
+        var accountDto = await _accountService.FindAccount(applicationDto.AccountId);
+        var petDto = await _petService.FindPet(applicationDto.PetId);
+
+        var applicationDetails = new ApplicationDetails
+        {
+            Application = applicationDto,
+            Account = accountDto,
+            Pet = petDto
+        };
+
+        return View(applicationDetails);
+    }
+
+    [HttpGet("Detail/{id}")]
+    public async Task<IActionResult> Detail(int id)
     {
         var applicationDto = await _applicationService.FindApplication(id);
         if (applicationDto == null)

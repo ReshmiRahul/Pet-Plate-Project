@@ -205,41 +205,7 @@ namespace PetAdoption.Services
 
         }
 
-        public async Task<IEnumerable<ApplicationDto>> ListApplicationsForAccount(int id)
-        {
-            // WHERE Accountid == id
-            List<Application> Applications = await _context.Applications
-                .Include(i => i.Pet)
-                .Include(i => i.Account)
-                .Include(i => i.Account.Pets)
-                .Where(i => i.AccountId == id)
-                .ToListAsync();
-
-            // empty list of data transfer object ApplicationDto
-            List<ApplicationDto> ApplicationDtos = new List<ApplicationDto>();
-            // foreach Account Item record in database
-            foreach (Application Application in Applications)
-            {
-                // create new instance of ApplicationDto, add to list
-                ApplicationDtos.Add(new ApplicationDto()
-                {
-                    ApplicationID = Application.ApplicationID,
-                    ApplicationDate = Application.ApplicationDate,
-                    ApplicationStatus = Application.ApplicationStatus,
-                    ApplicationExperience = Application.ApplicationExperience,
-                    ApplicationComments = Application.ApplicationComments,
-                    ApplicationReason = Application.ApplicationReason,
-                    AccountId = Application.AccountId,
-                    PetId = Application.PetId,
-                    AccountName = Application.Account.AccountName,
-                    PetName = Application.Pet.PetName
-                });
-            }
-            // return 200 OK with ApplicationDtos
-            return ApplicationDtos;
-
-        }
-
+       
         public async Task<IEnumerable<ApplicationDto>> ListApplicationsForPet(int id)
         {
             // WHERE PetId == id
@@ -274,6 +240,37 @@ namespace PetAdoption.Services
             return ApplicationDtos;
 
         }
+        public async Task<IEnumerable<ApplicationDto>> ListApplicationsForAccount(int accountId)
+        {
+            // WHERE AccountId == accountId (provided from the logged-in user)
+            List<Application> Applications = await _context.Applications
+                .Include(i => i.Pet)
+                .Include(i => i.Account)
+                .Include(i => i.Account.Pets)
+                .Where(i => i.AccountId == accountId)
+                .ToListAsync();
+
+            // Create a list of ApplicationDto and populate it
+            List<ApplicationDto> ApplicationDtos = new List<ApplicationDto>();
+            foreach (Application Application in Applications)
+            {
+                ApplicationDtos.Add(new ApplicationDto()
+                {
+                    ApplicationID = Application.ApplicationID,
+                    ApplicationDate = Application.ApplicationDate,
+                    ApplicationStatus = Application.ApplicationStatus,
+                    ApplicationExperience = Application.ApplicationExperience,
+                    ApplicationComments = Application.ApplicationComments,
+                    ApplicationReason = Application.ApplicationReason,
+                    AccountId = Application.AccountId,
+                    PetId = Application.PetId,
+                    AccountName = Application.Account.AccountName,
+                    PetName = Application.Pet.PetName
+                });
+            }
+            return ApplicationDtos;
+        }
+
     }
 }
 

@@ -27,6 +27,7 @@ namespace PetAdoption.Controllers
 
             // Store AccountId in session
             HttpContext.Session.SetInt32("AccountId", account.AccountId);
+            HttpContext.Items["Layout"] = "_LayoutAdmin";
 
             // Redirect to Profile page
             return RedirectToAction("Profile", "AccountPage");

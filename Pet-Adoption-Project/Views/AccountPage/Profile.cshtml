@@ -1,6 +1,17 @@
-﻿@model PetAdoption.Models.AccountDto
+﻿@{
+    var layout = Context.Items["Layout"] as string ?? "_LayoutAdmin"; // Default to "_Layout" if not set
+    Layout = layout;
+}
+
+
+@model PetAdoption.Models.AccountDto
 
 <h2>Profile for @Model.AccountName</h2>
 <p>Email: @Model.AccountEmail</p>
+<p>Role : @Model.AccountRole</p>
 
-<!-- Display other account details as needed -->
+<!-- Edit Profile Link -->
+<a href="@Url.Action("Edit", "AccountPage", new { id = Model.AccountId })" class="btn btn-primary">Edit Profile</a>
+
+<!-- Delete Profile Link -->
+<a href="@Url.Action("ConfirmDelete", "AccountPage", new { id = Model.AccountId })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your profile?');">Delete Profile</a>
