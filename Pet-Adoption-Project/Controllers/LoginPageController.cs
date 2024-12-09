@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetAdoption.Models.ViewModels;
 using PetAdoption.Interfaces;
+using PetAdoption.Models.ViewModels;
 
 namespace PetAdoption.Controllers
 {
@@ -15,31 +15,28 @@ namespace PetAdoption.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Validate user credentials (now using plain password)
-                bool isAuthenticated = await _accountService.ValidateUserAsync(model.Username, model.Password);
-
-                if (isAuthenticated)
-                {
-                    // Proceed with authentication
-                    Console.WriteLine("succes");
-                    return RedirectToAction("List", "AccountPage");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password");
-                }
+                return View(model);
             }
 
-            return View(model);
-        }
+            var account = await _accountService.Login(model.Username, model.Password);
+            if (account == null)
+            {
+                ModelState.AddModelError("", "Invalid username or password");
+                return View(model);
+            }
 
+            // Store AccountId in session
+            HttpContext.Session.SetInt32("AccountId", account.AccountId);
+
+            return RedirectToAction("Profile", "AccountPage");
+        }
     }
 }

@@ -13,17 +13,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "PetAdoption.Models.Account",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "PetAdoption.Controllers.AccountController",
@@ -110,17 +100,7 @@
   },
   {
     "ContainingType": "PetAdoption.Controllers.AccountController",
-    "Method": "GetProfile",
-    "RelativePath": "api/Account/Profile",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PetAdoption.Controllers.AccountController",
-    "Method": "Update",
+    "Method": "UpdateAccount",
     "RelativePath": "api/Account/Update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,

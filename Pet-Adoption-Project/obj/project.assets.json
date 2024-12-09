@@ -5024,11 +5024,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
+      "projectUniqueName": "C:\\Users\\reshm\\Source\\Repos\\Pet-Plate-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
       "projectName": "Pet-Adoption-Project",
-      "projectPath": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
+      "projectPath": "C:\\Users\\reshm\\Source\\Repos\\Pet-Plate-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
       "packagesPath": "C:\\Users\\reshm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\obj\\",
+      "outputPath": "C:\\Users\\reshm\\Source\\Repos\\Pet-Plate-Project\\Pet-Adoption-Project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\reshm\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -27,8 +27,29 @@ namespace PetAdoption.Controllers
         // Default action: redirect to list of accounts
         public IActionResult Index()
         {
-            return RedirectToAction("List");
+            return RedirectToAction("Profile");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var accountId = HttpContext.Session.GetInt32("AccountId");
+
+            if (accountId == null)
+            {
+                return RedirectToAction("Index", "LoginPage");
+            }
+
+            var account = await _accountService.FindAccount(accountId.Value);
+            if (account == null)
+            {
+                return View("Error", new ErrorViewModel { Errors = new List<string> { "Account not found" } });
+            }
+
+            return View(account); // Make sure there's a Profile.cshtml to render the account details
+        }
+
+
 
         // GET: AccountPage/List
         public async Task<IActionResult> List()

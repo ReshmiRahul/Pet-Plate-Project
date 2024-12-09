@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7nlXIo7Tjbs=",
+  "dgSpecHash": "XD/Q5+kHkME=",
   "success": true,
-  "projectFilePath": "C:\\Users\\reshm\\source\\repos\\Pet-Adoption-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
+  "projectFilePath": "C:\\Users\\reshm\\Source\\Repos\\Pet-Plate-Project\\Pet-Adoption-Project\\Pet-Adoption-Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\reshm\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\reshm\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
