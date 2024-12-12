@@ -22,7 +22,7 @@ Developed secure user authorization functionality.
 
 Clone the repository:
 ```bash
-git clone https://github.com/[Your-GitHub-Username]/FoodTruck-PetAdoption.git
+git clone https://github.com/ReshmiRahul/FoodTruck-PetAdoption.git
 ```
 
 Open the solution file (.sln) in Visual Studio.
