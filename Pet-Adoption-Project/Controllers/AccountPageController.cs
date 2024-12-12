@@ -152,7 +152,7 @@ namespace PetAdoption.Controllers
 
             if (response.Status == ServiceResponse.ServiceStatus.Updated)
             {
-                return RedirectToAction("Details", "AccountPage", new { id = id });
+                return RedirectToAction("Profile", "AccountPage", new { id = id });
             }
             else
             {
