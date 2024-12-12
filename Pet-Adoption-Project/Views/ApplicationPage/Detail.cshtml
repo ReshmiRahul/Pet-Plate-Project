@@ -19,13 +19,26 @@
                 <p class="card-text"><strong>Account Name:</strong> @Model.Account.AccountName</p>
                 <p class="card-text"><strong>Pet Name:</strong> @Model.Pet.PetName</p>
                 <p class="card-text"><strong>Application Date:</strong> @Model.Application.ApplicationDate?.ToString("MM/dd/yyyy")</p>
-                <p class="card-text"><strong>Application Status:</strong> @Model.Application.ApplicationStatus</p>
+                <p class="card-text">
+                    <strong>Application Status:</strong>
+                    @if (Model.Application.ApplicationStatus == 0)
+                    {
+                        <span>Pending</span>
+                    }
+                    else if (Model.Application.ApplicationStatus == 1)
+                    {
+                        <span>Approved</span>
+                    }
+                    else if (Model.Application.ApplicationStatus == 2)
+                    {
+                        <span>Rejected</span>
+                    }
+                </p>
                 <p class="card-text"><strong>Reason:</strong> @Model.Application.ApplicationReason</p>
                 <p class="card-text"><strong>Experience:</strong> @Model.Application.ApplicationExperience</p>
                 <p class="card-text"><strong>Comments:</strong> @Model.Application.ApplicationComments</p>
             </div>
             <div class="card-footer text-muted">
-                
                 <a href="@Url.Action("Lists", "ApplicationPage")" class="btn btn-secondary">Back to List</a>
             </div>
         </div>

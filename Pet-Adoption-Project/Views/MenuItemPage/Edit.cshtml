@@ -4,41 +4,44 @@
     ViewData["Title"] = "Edit MenuItem";
 }
 
-<h1>Edit MenuItem</h1>
+<div class="container mt-4">
+    <h1>Edit MenuItem</h1>
+    <h4>Menu Item Details</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Update" asp-route-id="@Model.MenuItemId">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MenuItemId" />
 
-<h4>Menu Items</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Update" asp-route-id="@Model.MenuItemId">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MenuItemId" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Name</label>
-                <input asp-for="Name" class="form-control" />
-            </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label">Price</label>
+                    <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Price" class="control-label">Price</label>
-                <input asp-for="Price" class="form-control" />
-            </div>
+                <div class="form-group">
+                    <label asp-for="FoodTruckId" class="control-label">Food Truck</label>
+                    <input asp-for="FoodTruckId" class="form-control" />
+                    <span asp-validation-for="FoodTruckId" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="FoodTruckId" class="control-label">FoodTruckId</label>
-                <input asp-for="FoodTruckId" class="form-control" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {

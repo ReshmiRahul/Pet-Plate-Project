@@ -4,42 +4,49 @@
     ViewData["Title"] = "Application List";
 }
 
-<h1>Application List</h1>
+<div class="container mt-4">
+    <h1>Application List</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.AccountName)</th>
-            <th>@Html.DisplayNameFor(model => model.PetName)</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
+    <!-- Table to display applications -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.AccountName)</th>
+                <th>@Html.DisplayNameFor(model => model.PetName)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PetName)</td>
+
+                        <!-- Actions for each application -->
+                        <td>
+                            <!-- Edit button for confirming the application -->
+                            <a asp-action="Edit" asp-route-id="@item.ApplicationID" class="btn btn-warning btn-sm">Confirm</a>
+
+                            <!-- View details of the application -->
+                            <a asp-action="Details" asp-route-id="@item.ApplicationID" class="btn btn-info btn-sm">Details</a>
+
+                            <!-- Delete form to confirm deletion -->
+                            <form asp-action="ConfirmDelete" asp-route-id="@item.ApplicationID" method="get" style="display:inline-block;">
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PetName)</td>
-                   
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ApplicationID" class="btn btn-warning">Confirm</a>
-                        <a asp-action="Details" asp-route-id="@item.ApplicationID" class="btn btn-info">Details</a>
-                        <form asp-action="ConfirmDelete" asp-route-id="@item.ApplicationID" method="get" style="display:inline-block;">
-                            <input type="submit" value="Delete" class="btn btn-danger" />
-                        </form>
-
-
-                    </td>
+                    <td colspan="3" class="text-center">No applications found.</td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5" class="text-center">No applications found.</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

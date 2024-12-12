@@ -1,25 +1,36 @@
 ﻿@model PetAdoption.Models.ViewModels.FoodTruckDetails
 
-<h1>Food Truck Details</h1>
+<div class="container mt-4">
+    <h1>Food Truck Details</h1>
 
-<div>
-    <h2>@Model.FoodTruck.Name</h2>
-    <p>@Model.FoodTruck.Description</p>
-    <p>Contact: @Model.FoodTruck.Contact</p>
-    <p>Location Address: @Model.FoodTruck.LocationAddress</p>
+    <!-- Food Truck Details Section -->
+    <div class="mb-4">
+        <h2>@Model.FoodTruck.Name</h2>
+        <p><strong>Description:</strong> @Model.FoodTruck.Description</p>
+        <p><strong>Contact:</strong> @Model.FoodTruck.Contact</p>
+        <p><strong>Location Address:</strong> @Model.FoodTruck.LocationAddress</p>
+    </div>
+
+    <!-- Menu Items Section -->
+    @if (Model.MenuItems != null && Model.MenuItems.Any())
+    {
+        <h3>Menu Items</h3>
+        <ul class="list-group">
+            @foreach (var item in Model.MenuItems)
+            {
+                <li class="list-group-item">
+                    @item.Name (@item.Price.ToString("C"))
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No menu items are associated with this food truck.</p>
+    }
+
+    <!-- Back to List Link -->
+    <div>
+        <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+    </div>
 </div>
-
-@if (Model.MenuItems != null && Model.MenuItems.Any())
-{
-    <h3>Menu Items</h3>
-    <ul>
-        @foreach (var item in Model.MenuItems)
-        {
-            <li>@item.Name (@item.Price.ToString("C"))</li>
-        }
-    </ul>
-}
-else
-{
-    <p>No menu items are associated with this food truck.</p>
-}

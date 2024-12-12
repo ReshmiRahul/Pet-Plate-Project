@@ -1,10 +1,52 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    var layout = Context.Items["Layout"] as string ?? "_HomeLayout"; 
+    var layout = Context.Items["Layout"] as string ?? "_HomeLayout";
     Layout = layout;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="jumbotron text-center bg-light p-5 rounded shadow">
+        <h1 class="display-4 text-primary">Welcome to Food Truck & Pet Adoption</h1>
+        <p class="lead mt-3">A platform that combines delicious food and furry friends under one roof!</p>
+        <hr class="my-4">
+        <p>
+            Our project allows users to explore nearby food trucks, their menus, and reviews, while also connecting with adoptable pets looking for a loving home.
+        </p>
+        <a class="btn btn-primary btn-lg" href="/FoodTrucks" role="button">Explore Food Trucks</a>
+        <a class="btn btn-success btn-lg ml-2" href="/Pets" role="button">Adopt a Pet</a>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <img src="/images/1.jpg" class="card-img-top equal-img-size" alt="Food Truck">
+                <div class="card-body">
+                    <h5 class="card-title">Discover Food Trucks</h5>
+                    <p class="card-text">
+                        Explore and review food trucks near you, browse their menus, and plan your next meal adventure!
+                    </p>
+                    <a href="/FoodTrucks" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <img src="/images/2.jpg" class="card-img-top equal-img-size" alt="Pet Adoption">
+                <div class="card-body">
+                    <h5 class="card-title">Find Your New Best Friend</h5>
+                    <p class="card-text">
+                        Browse profiles of adorable pets looking for their forever homes and start your adoption journey today.
+                    </p>
+                    <a href="/Pets" class="btn btn-success">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .equal-img-size {
+        height: 200px; /* Fixed height */
+        object-fit: cover; /* Ensures the image covers the space without stretching */
+    }
+</style>

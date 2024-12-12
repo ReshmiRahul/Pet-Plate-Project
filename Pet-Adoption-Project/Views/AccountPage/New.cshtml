@@ -6,66 +6,106 @@
     Layout = layout;
 }
 
-<h1>Create New Account</h1>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h1 class="card-title mb-0">Create New Account</h1>
+        </div>
+        <div class="card-body">
+            <h4 class="text-secondary">Account Information</h4>
+            <hr />
 
-<h4>Account Information</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Add" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-action="Add" method="post" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" style="display: none;">
+                    Please correct the highlighted errors and try again.
+                </div>
 
-            <!-- Name -->
-            <div class="form-group">
-                <label asp-for="AccountName" class="control-label">AccountName</label>
-                <input asp-for="AccountName" class="form-control" />
-                <span asp-validation-for="AccountName" class="text-danger"></span>
-            </div>
+                <!-- Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="AccountName" class="form-label">Account Name</label>
+                    <input asp-for="AccountName" class="form-control" placeholder="Enter your name" required />
+                    <span asp-validation-for="AccountName" class="text-danger"></span>
+                </div>
 
-            <!-- Description -->
-            <div class="form-group">
-                <label asp-for="AccountEmail" class="control-label">AccountEmail</label>
-                <textarea asp-for="AccountEmail" class="form-control"></textarea>
-                <span asp-validation-for="AccountEmail" class="text-danger"></span>
-            </div>
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <label asp-for="AccountEmail" class="form-label">Email</label>
+                    <input asp-for="AccountEmail" type="email" class="form-control" placeholder="Enter your email" required />
+                    <span asp-validation-for="AccountEmail" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="AccountPassword" class="control-label">AccountPassword</label>
-                <textarea asp-for="AccountPassword" class="form-control"></textarea>
-                <span asp-validation-for="AccountPassword" class="text-danger"></span>
-            </div>
+                <!-- Password -->
+                <div class="form-group mb-3">
+                    <label asp-for="AccountPassword" class="form-label">Password</label>
+                    <input asp-for="AccountPassword" type="password" class="form-control" placeholder="Enter your password" required />
+                    <span asp-validation-for="AccountPassword" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="AccountRole" class="control-label">AccountRole</label>
-                <textarea asp-for="AccountRole" class="form-control"></textarea>
-                <span asp-validation-for="AccountRole" class="text-danger"></span>
-            </div>
-            
+                <!-- Role -->
+                <div class="form-group mb-3">
+                    <label asp-for="AccountRole" class="form-label">Role</label>
+                    <select asp-for="AccountRole" class="form-control" required>
+                        <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                    <span asp-validation-for="AccountRole" class="text-danger"></span>
+                </div>
 
-            <!-- Location -->
-            <div class="form-group">
-                <label asp-for="LocationId" class="control-label">Location Name</label>
-                <select asp-for="LocationId" class="form-control">
-                    <option value="">Select a Location</option>
-                    @foreach (var location in ViewBag.Locations)
-                    {
-                        <option value="@location.Value">@location.Text</option>
-                    }
-                </select>
-                <span asp-validation-for="LocationId" class="text-danger"></span>
-            </div>
-            <!-- Submit Button -->
-            <div class="form-group">
-                <input type="submit" value="Create Account" class="btn btn-primary" />
-            </div>
-        </form>
+                <!-- Location -->
+                <div class="form-group mb-4">
+                    <label asp-for="LocationId" class="form-label">Location</label>
+                    <select asp-for="LocationId" class="form-control" required>
+                        <option value="">Select a Location</option>
+                        @foreach (var location in ViewBag.Locations)
+                        {
+                            <option value="@location.Value">@location.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="LocationId" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <a asp-action="List" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back to Accounts
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-lg" style="transition: transform 0.3s, background-color 0.3s;">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="List">Back to Account</a>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Adding basic animation on hover for the submit button
+        document.querySelector('button[type="submit"]').addEventListener('mouseover', function () {
+            this.style.transform = 'scale(1.05)';
+            this.style.backgroundColor = '#0078D7'; // Slightly darker blue
+        });
+        document.querySelector('button[type="submit"]').addEventListener('mouseout', function () {
+            this.style.transform = 'scale(1)';
+            this.style.backgroundColor = ''; // Reset to default
+        });
+
+        // Form validation using Bootstrap
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        document.querySelector('.alert-danger').style.display = 'block';
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 }

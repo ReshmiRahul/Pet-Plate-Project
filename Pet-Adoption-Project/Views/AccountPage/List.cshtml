@@ -4,26 +4,49 @@
     ViewData["Title"] = "Accounts List";
 }
 
-<h1>Accounts List</h1>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h1 class="card-title mb-0">Accounts List</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover table-responsive-md">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().AccountName)</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                            <td class="text-center">
+                                <a asp-action="Details" asp-route-id="@item.AccountId" class="btn btn-info btn-sm me-2"
+                                   style="transition: transform 0.3s;">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.First().AccountName)</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.AccountId" class="btn btn-info">Details</a>
-                    
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@section Scripts {
+    <script>
+        // Add hover effect for buttons
+        const actionButtons = document.querySelectorAll('.btn-info');
+        actionButtons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                button.style.transform = 'scale(1.1)';
+            });
+            button.addEventListener('mouseout', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+}

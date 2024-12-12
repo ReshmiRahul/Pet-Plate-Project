@@ -8,12 +8,12 @@
 
     @if (Model != null)
     {
-        <div class="card">
-            <div class="card-header">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
                 Pet Information
             </div>
             <div class="card-body">
-                <h5 class="card-title">Pet ID: @Model.Pet.PetId</h5>
+                <h5 class="card-title text-primary">Pet ID: @Model.Pet.PetId</h5>
                 <p class="card-text"><strong>Name:</strong> @Model.Pet.PetName</p>
                 <p class="card-text"><strong>Type:</strong> @Model.Pet.PetType</p>
                 <p class="card-text"><strong>Breed:</strong> @Model.Pet.PetBreed</p>
@@ -21,24 +21,29 @@
                 <p class="card-text"><strong>Description:</strong> @Model.Pet.PetDescription</p>
                 <p class="card-text"><strong>Status:</strong> @Model.Pet.PetStatus</p>
             </div>
-            <div class="card-footer text-muted">
-                <a href="@Url.Action("Edit", "PetPage", new { id = Model.Pet.PetId })" class="btn btn-warning">Edit Pet</a>
-                <a href="@Url.Action("List", "PetPage")" class="btn btn-secondary">Back to List</a>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="@Url.Action("Edit", "PetPage", new { id = Model.Pet.PetId })" class="btn btn-warning">
+                    Edit Pet
+                </a>
+                <a href="@Url.Action("List", "PetPage")" class="btn btn-secondary">
+                    Back to List
+                </a>
             </div>
         </div>
 
         @if (Model.AssociatedAccounts != null && Model.AssociatedAccounts.Any())
         {
-            <div class="card mt-4">
-                <div class="card-header">
+            <div class="card mt-4 shadow-sm">
+                <div class="card-header bg-info text-white">
                     Associated Accounts
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach (var account in Model.AssociatedAccounts)
                         {
-                            <li class="list-group-item">
-                                <strong>@account.AccountName</strong> (ID: @account.AccountId)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>@account.AccountName</strong>
+                                <span class="badge bg-primary text-light">ID: @account.AccountId</span>
                             </li>
                         }
                     </ul>
@@ -48,16 +53,19 @@
 
         @if (Model.PetApplications != null && Model.PetApplications.Any())
         {
-            <div class="card mt-4">
-                <div class="card-header">
+            <div class="card mt-4 shadow-sm">
+                <div class="card-header bg-success text-white">
                     Associated Applications
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach (var application in Model.PetApplications)
                         {
-                            <li class="list-group-item">
-                                <strong>Application ID:</strong> @application.ApplicationID - <strong>Status:</strong> @application.ApplicationStatus
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    <strong>Application ID:</strong> @application.ApplicationID
+                                </span>
+                                <span class="badge bg-success text-light">@application.ApplicationStatus</span>
                             </li>
                         }
                     </ul>

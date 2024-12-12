@@ -1,22 +1,104 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(to right, #f0f8ff, #d6f3d3);
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.jumbotron {
+    background-color: #e8f4f8;
+    color: #5a8f7d;
+}
+
+.card {
+    background-color: #f9f9f9;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+}
+
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 2px solid #d6f3d3;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5a8f7d;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #333;
+    font-size: 1rem;
+    padding: 10px 15px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+    .navbar-nav .nav-item .nav-link:hover,
+    .navbar-nav .nav-item .nav-link:focus {
+        color: #258cfb;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+.navbar-toggler-icon {
+    background-color: #258cfb;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #258cfb;
+    font-weight: bold;
+}
+
+.navbar-collapse .navbar-nav .nav-item:last-child {
+    margin-left: auto;
+}
+
+    .navbar-collapse .navbar-nav .nav-item:last-child .nav-link {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+        .navbar-collapse .navbar-nav .nav-item:last-child .nav-link:hover {
+            color: #c0392b;
+        }
+
+@media (max-width: 768px) {
+    .navbar-nav .nav-item {
+        text-align: center;
+    }
+
+        .navbar-nav .nav-item .nav-link {
+            padding: 10px;
+        }
 }
