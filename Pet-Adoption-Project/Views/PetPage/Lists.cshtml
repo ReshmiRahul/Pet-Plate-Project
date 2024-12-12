@@ -6,28 +6,37 @@
     Layout = layout;
 }
 
-<h1>Pets List</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Pets List</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PetName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetName)
-                </td>
-                <td>
-                    <a asp-action="Detail" asp-route-id="@item.PetId" class="btn btn-info">Details</a>
-                </td>
+                <th>Pet Name</th>
+                <th class="text-end">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.PetName)</td>
+                        <td class="text-end">
+                            <a asp-action="Detail" asp-route-id="@item.PetId" class="btn btn-info btn-sm">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center text-muted">
+                        No pets available.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -4,58 +4,68 @@
     ViewData["Title"] = "Create New Food Truck";
 }
 
-<h1>Create New Food Truck</h1>
+<div class="container mt-5">
 
-<h4>Food Truck Information</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Add" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h1>Create New Food Truck</h1>
 
-            <!-- Name -->
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+    <h4>Food Truck Information</h4>
+    <hr />
 
-            <!-- Description -->
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            Enter the details of the new food truck.
+        </div>
+        <div class="card-body">
 
-            <!-- Contact -->
-            <div class="form-group">
-                <label asp-for="Contact" class="control-label"></label>
-                <input asp-for="Contact" class="form-control" />
-                <span asp-validation-for="Contact" class="text-danger"></span>
-            </div>
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <!-- Location -->
-            <div class="form-group">
-                <label asp-for="LocationId" class="control-label">Location Name</label>
-                <select asp-for="LocationId" class="form-control">
-                    <option value="">Select a Location</option>
-                    @foreach (var location in ViewBag.Locations)
-                    {
-                        <option value="@location.Value">@location.Text</option>
-                    }
-                </select>
-                <span asp-validation-for="LocationId" class="text-danger"></span>
-            </div>
-            <!-- Submit Button -->
-            <div class="form-group">
-                <input type="submit" value="Create Food Truck" class="btn btn-primary" />
-            </div>
-        </form>
+                <!-- Name -->
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Contact -->
+                <div class="form-group">
+                    <label asp-for="Contact" class="control-label"></label>
+                    <input asp-for="Contact" class="form-control" />
+                    <span asp-validation-for="Contact" class="text-danger"></span>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label asp-for="LocationId" class="control-label">Location Name</label>
+                    <select asp-for="LocationId" class="form-control">
+                        <option value="">Select a Location</option>
+                        @foreach (var location in ViewBag.Locations)
+                        {
+                            <option value="@location.Value">@location.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="LocationId" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <input type="submit" value="Create Food Truck" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="List">Back to Food Trucks</a>
+    <div class="mt-3">
+        <a asp-action="List" class="btn btn-secondary">Back to Food Trucks</a>
+    </div>
+
 </div>
 
 @section Scripts {

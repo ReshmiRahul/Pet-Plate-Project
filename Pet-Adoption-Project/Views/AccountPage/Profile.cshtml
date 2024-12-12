@@ -3,15 +3,43 @@
     Layout = layout;
 }
 
-
 @model PetAdoption.Models.AccountDto
 
-<h2>Profile for @Model.AccountName</h2>
-<p>Email: @Model.AccountEmail</p>
-<p>Role : @Model.AccountRole</p>
-
-<!-- Edit Profile Link -->
-<a href="@Url.Action("Edit", "AccountPage", new { id = Model.AccountId })" class="btn btn-primary">Edit Profile</a>
-
-<!-- Delete Profile Link -->
-<a href="@Url.Action("ConfirmDelete", "AccountPage", new { id = Model.AccountId })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your profile?');">Delete Profile</a>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Profile: @Model.AccountName</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <strong>Email:</strong>
+                </div>
+                <div class="col-md-8">
+                    @Model.AccountEmail
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <strong>Role:</strong>
+                </div>
+                <div class="col-md-8">
+                    @Model.AccountRole
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <!-- Edit Profile Button -->
+            <a href="@Url.Action("Edit", "AccountPage", new { id = Model.AccountId })" class="btn btn-primary mr-2">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+            <!-- Delete Profile Button -->
+            <a href="@Url.Action("ConfirmDelete", "AccountPage", new { id = Model.AccountId })"
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete your profile?');">
+                <i class="fas fa-trash-alt"></i> Delete Profile
+            </a>
+        </div>
+    </div>
+</div>

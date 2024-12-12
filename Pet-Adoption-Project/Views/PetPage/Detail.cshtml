@@ -10,9 +10,9 @@
 
     @if (Model != null)
     {
-        <div class="card">
-            <div class="card-header">
-                Pet Information
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5>Pet Information</h5>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Pet ID: @Model.Pet.PetId</h5>
@@ -30,15 +30,15 @@
 
         @if (Model.AssociatedAccounts != null && Model.AssociatedAccounts.Any())
         {
-            <div class="card mt-4">
-                <div class="card-header">
-                    Associated Accounts
+            <div class="card shadow mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5>Associated Accounts</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach (var account in Model.AssociatedAccounts)
                         {
-                            <li class="list-group-item">
+                            <li class="list-group-item d-flex justify-content-between">
                                 <strong>@account.AccountName</strong> (ID: @account.AccountId)
                             </li>
                         }
@@ -49,16 +49,17 @@
 
         @if (Model.PetApplications != null && Model.PetApplications.Any())
         {
-            <div class="card mt-4">
-                <div class="card-header">
-                    Associated Applications
+            <div class="card shadow mt-4">
+                <div class="card-header bg-warning text-white">
+                    <h5>Associated Applications</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach (var application in Model.PetApplications)
                         {
-                            <li class="list-group-item">
-                                <strong>Application ID:</strong> @application.ApplicationID - <strong>Status:</strong> @application.ApplicationStatus
+                            <li class="list-group-item d-flex justify-content-between">
+                                <strong>Application ID:</strong> @application.ApplicationID -
+                                <span class="badge bg-primary">@application.ApplicationStatus</span>
                             </li>
                         }
                     </ul>
@@ -68,7 +69,7 @@
     }
     else
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-4" role="alert">
             Pet not found!
         </div>
     }

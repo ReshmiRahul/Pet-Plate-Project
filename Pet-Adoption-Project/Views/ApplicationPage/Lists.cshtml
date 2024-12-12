@@ -6,40 +6,45 @@
     Layout = layout;
 }
 
-<h1>Application List</h1>
+<div class="container mt-4">
+    <h1>Application List</h1>
 
-<p>
-    <a asp-action="New" class="btn btn-primary">Create New Application</a>
-</p>
+    <!-- Button to create a new application -->
+    <p>
+        <a asp-action="New" class="btn btn-primary">Create New Application</a>
+    </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.AccountName)</th>
-            <th>@Html.DisplayNameFor(model => model.PetName)</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
+    <!-- Table to display applications -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.AccountName)</th>
+                <th>@Html.DisplayNameFor(model => model.PetName)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PetName)</td>
+
+                        <!-- Action buttons for each application -->
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@item.ApplicationID" class="btn btn-info btn-sm">Detail</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PetName)</td>
-
-                    <td>
-                        <a asp-action="Detail" asp-route-id="@item.ApplicationID" class="btn btn-info">Detail</a>
-                    </td>
+                    <td colspan="3" class="text-center">No applications found.</td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5" class="text-center">No applications found.</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

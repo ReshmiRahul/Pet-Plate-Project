@@ -4,36 +4,45 @@
     ViewData["Title"] = "Pets List";
 }
 
-<h1>Pets List</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Pets List</h1>
 
-<p>
-    <a asp-action="New" class="btn btn-primary">Create New Pet</a>
-</p>
+    <div class="mb-3">
+        <a asp-action="New" class="btn btn-primary">Create New Pet</a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PetName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.PetId" class="btn btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.PetId" class="btn btn-info">Details</a>
-                    <form asp-action="ConfirmDelete" asp-route-id="@item.PetId" method="get" style="display:inline-block;">
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-                    </form>
-                </td>
+                <th>Pet Name</th>
+                <th class="text-end">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.PetName)</td>
+                        <td class="text-end">
+                            <a asp-action="Edit" asp-route-id="@item.PetId" class="btn btn-warning btn-sm me-2">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.PetId" class="btn btn-info btn-sm me-2">Details</a>
+                            <form asp-action="ConfirmDelete" asp-route-id="@item.PetId" method="get" class="d-inline-block">
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center text-muted">
+                        No pets available.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
